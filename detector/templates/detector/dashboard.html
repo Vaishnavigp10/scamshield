@@ -1,0 +1,21 @@
+{% extends "detector/base.html" %}{% block title %}Trends dashboard{% endblock %}
+{% block content %}<div class="wrap">
+<header style="padding:48px 0 6px" class="fade"><div class="pill"><span class="dot"></span> Auto-refreshing every 15 s</div><h1 style="font-size:2.6rem">Scam <span class="grad">trends dashboard</span></h1><p class="meta" id="gen" style="margin-top:8px"></p></header>
+<div class="kpis">
+ <div class="glass kpi cy"><small>Reports analysed</small><b id="k-total">0</b></div>
+ <div class="glass kpi bad"><small>Scams detected</small><b id="k-scam">0</b></div>
+ <div class="glass kpi warn"><small>Suspicious</small><b id="k-susp">0</b></div>
+ <div class="glass kpi"><small>Threat rate %</small><b id="k-rate">0</b></div>
+ <div class="glass kpi cy"><small>Last 24 hours</small><b id="k-24">0</b></div>
+ <div class="glass kpi bad"><small>Active campaigns</small><b id="k-camp">0</b></div>
+ <div class="glass kpi ok"><small>Avg classify latency</small><b id="k-ms">–</b></div>
+ <div class="glass kpi"><small>Pipeline status</small><b style="font-size:1.5rem;color:var(--safe)">● Healthy</b></div>
+</div>
+<div class="charts"><div class="glass"><h3>Reports per day by verdict</h3><div class="chartbox"><canvas id="c-daily"></canvas></div></div>
+<div class="glass"><h3>Scam categories</h3><div class="chartbox"><canvas id="c-cat"></canvas></div></div></div>
+<div class="charts two"><div class="glass"><h3>Reports by channel</h3><div class="chartbox" style="height:240px"><canvas id="c-chan"></canvas></div></div>
+<div class="glass"><h3>Top malicious domains</h3><table><tbody id="t-dom"></tbody></table></div></div>
+<div class="charts two"><div class="glass"><h3>🔥 Detected campaigns (repeated messages)</h3><table><tbody id="t-camp"></tbody></table></div>
+<div class="glass"><h3>⚡ Live pipeline events</h3><div id="ev"></div></div></div>
+</div>{% endblock %}
+{% block scripts %}<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>{% endblock %}

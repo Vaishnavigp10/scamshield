@@ -1,0 +1,9 @@
+{% extends "detector/base.html" %}{% block title %}Report detail{% endblock %}
+{% block content %}<div class="wrap" style="max-width:860px;padding-top:44px"><a href="{% url 'reports' %}" class="meta">← All reports</a>
+<div class="glass fade" style="margin-top:14px"><span class="tag {{ r.label }}">{{ r.label }}</span> <span class="meta">&nbsp;{{ r.category }} · {{ r.channel }} · {{ r.created_at|date:"d M Y H:i" }}</span>
+<h2 style="font-size:2.4rem;margin:14px 0">Risk score <span class="grad">{{ r.score|floatformat:2 }}</span></h2>
+<pre style="white-space:pre-wrap">{{ r.text }}</pre>
+<h3 style="margin:22px 0 10px">Why this verdict</h3><ul class="reasons">{% for x in r.reasons %}<li>{{ x }}</li>{% endfor %}</ul>
+{% if r.domains %}<h3 style="margin:22px 0 10px">Domains found</h3>{% for d in r.domains %}<code class="chip">{{ d }}</code> {% endfor %}{% endif %}
+<h3 style="margin:22px 0 10px">Pipeline trace</h3>{% for e in r.events.all %}<div class="ev"><span>{{ e.created_at|date:"H:i:s" }}</span><b>{{ e.name }}</b> {{ e.detail }}</div>{% endfor %}
+<p class="meta" style="margin-top:14px">Model {{ r.model_version }} · {{ r.processing_ms }} ms · similar reports: {{ r.campaign_size }}</p></div></div>{% endblock %}

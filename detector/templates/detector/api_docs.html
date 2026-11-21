@@ -1,0 +1,14 @@
+{% extends "detector/base.html" %}{% block title %}Public API{% endblock %}
+{% block content %}<div class="wrap" style="max-width:900px"><header style="padding:48px 0 20px"><h1 style="font-size:2.6rem">Public <span class="grad">API</span></h1><p class="meta">Base URL: <code id="base"></code> · JSON · CORS enabled · 60 requests/min/IP</p></header>
+<div class="glass ep"><h3><span class="method post">POST</span><code>/api/v1/reports/</code></h3><p class="meta">Submit a message: it is queued, classified and stored.</p>
+<pre>curl -X POST $BASE/api/v1/reports/ \
+  -H "Content-Type: application/json" \
+  -d '{"text":"Your SBI account is blocked, update KYC http://sbi-kyc.xyz","channel":"sms"}'</pre></div>
+<div class="glass ep"><h3><span class="method post">POST</span><code>/api/v1/check/</code></h3><p class="meta">Stateless check — classifies without storing anything.</p></div>
+<div class="glass ep"><h3><span class="method get">GET</span><code>/api/v1/reports/?label=scam&amp;category=&amp;limit=20&amp;offset=0</code></h3><p class="meta">List classified reports (preview text only).</p></div>
+<div class="glass ep"><h3><span class="method get">GET</span><code>/api/v1/reports/&lt;id&gt;/</code></h3><p class="meta">Full verdict with reasons and pipeline trace.</p></div>
+<div class="glass ep"><h3><span class="method get">GET</span><code>/api/v1/stats/</code></h3><p class="meta">Aggregated trends used by the dashboard.</p></div>
+<div class="glass ep"><h3><span class="method get">GET</span><code>/api/v1/health/</code></h3><p class="meta">Liveness probe.</p></div>
+<div class="glass"><button class="btn" id="try">▶ Try GET /api/v1/stats/</button><pre id="out" style="margin-top:14px;max-height:300px">Click the button…</pre></div>
+<script>document.getElementById('base').textContent=location.origin;document.querySelectorAll('pre').forEach(p=>p.innerHTML=p.innerHTML.replace('$BASE',location.origin));
+document.getElementById('try').onclick=async()=>{const r=await(await fetch('/api/v1/stats/')).json();document.getElementById('out').textContent=JSON.stringify(r.kpis,null,2)}</script></div>{% endblock %}

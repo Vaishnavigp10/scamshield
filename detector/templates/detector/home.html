@@ -1,0 +1,29 @@
+{% extends "detector/base.html" %}{% block title %}Analyse a message{% endblock %}
+{% block content %}<div class="wrap">
+<header class="hero fade"><div class="pill"><span class="dot"></span> Live pipeline · reports classified in real time</div>
+<h1>Spot scams <span class="grad">before they spot you.</span></h1>
+<p class="lead">Paste any suspicious SMS, email or WhatsApp message. Our event-driven AI pipeline classifies it, explains why, and feeds the community trends dashboard.</p></header>
+
+<div class="analyzer">
+ <form id="az-form" class="glass">
+  <label class="k">Suspicious message</label>
+  <textarea id="az-text" placeholder="Paste the message here… (phone numbers, emails and OTPs are automatically redacted)"></textarea>
+  <div class="chips">{% for name, text in samples %}<span class="chip" data-text="{{ text }}">{{ name }}</span>{% endfor %}</div>
+  <div class="row"><div><label class="k">Channel</label><select id="az-channel"><option value="sms">SMS</option><option value="whatsapp">WhatsApp</option><option value="email">Email</option><option value="call">Phone call</option><option value="social">Social media</option></select></div>
+  <div><label class="k">Sender (optional)</label><input id="az-sender" placeholder="e.g. VK-HDFCBK"></div></div>
+  <button class="btn" id="az-btn" type="submit">Analyse &amp; report</button>
+ </form>
+ <div class="glass result" id="az-out"><div class="idle"><div class="big">🔍</div><b>Your verdict appears here</b><p>Risk score, scam category and the exact reasons behind the decision.</p></div></div>
+</div>
+
+<section class="s"><div class="sh"><h2>How the pipeline works</h2><p>Every report is an event that flows through independent cloud stages.</p></div>
+<div class="grid3">
+ <div class="glass feat"><div class="ic">📥</div><h4>1 · Ingest</h4><p>Web form or public API receives the report; PII is redacted and a fingerprint is created.</p></div>
+ <div class="glass feat"><div class="ic">📨</div><h4>2 · Event queue</h4><p><code>report.received</code> is published to the event bus (Amazon SQS-ready).</p></div>
+ <div class="glass feat"><div class="ic">🧠</div><h4>3 · AI classify</h4><p>TF-IDF + Logistic Regression model fused with explainable URL &amp; urgency rules.</p></div>
+ <div class="glass feat"><div class="ic">📊</div><h4>4 · Trends &amp; API</h4><p>Verdicts are stored, clustered into campaigns, and exposed via dashboard and REST API.</p></div>
+</div></section>
+
+<section class="s" style="padding-top:10px"><div class="sh"><h2>Latest community reports</h2><p>Redacted, anonymous and classified moments ago.</p></div>
+<div class="feed">{% for r in recent %}<a href="{% url 'report_detail' r.pk %}"><span class="tag {{ r.label }}">{{ r.label }}</span><p>{{ r.text|truncatechars:110 }}</p><span class="meta">{{ r.category }} · {{ r.created_at|timesince }} ago</span></a>{% empty %}<div class="glass">No reports yet — analyse the first one above.</div>{% endfor %}</div></section>
+</div>{% endblock %}

@@ -1,0 +1,22 @@
+{% load static %}<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}ScamShield{% endblock %} · Scam & Phishing Detection Pipeline</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'detector/css/style.css' %}">
+</head><body>
+<div class="bg-orbs"><span></span><span></span><span></span></div>
+<nav><div class="wrap">
+  <a class="brand" href="{% url 'home' %}"><div class="logo">🛡️</div><span class="t">ScamShield</span></a>
+  <div class="links">
+    <a href="{% url 'home' %}" class="{% if page == 'home' %}on{% endif %}">Analyse</a>
+    <a href="{% url 'dashboard' %}" class="{% if page == 'dashboard' %}on{% endif %}">Trends</a>
+    <a href="{% url 'reports' %}" class="{% if page == 'reports' %}on{% endif %}">Reports</a>
+    <a href="{% url 'architecture' %}" class="{% if page == 'architecture' %}on{% endif %}">Pipeline</a>
+    <a href="{% url 'api_docs' %}" class="{% if page == 'api' %}on{% endif %}">API</a>
+  </div></div></nav>
+{% block content %}{% endblock %}
+<footer><div class="wrap"><span>🛡️ ScamShield — event-driven scam &amp; phishing detection pipeline</span><span>CAT-3 AI-Enabled Cloud Case Study · Dayananda Sagar University</span></div></footer>
+{% block scripts %}{% endblock %}
+<script src="{% static 'detector/js/app.js' %}"></script>
+</body></html>

@@ -1,0 +1,8 @@
+Django>=5.1,<7.0
+scikit-learn>=1.4
+gunicorn>=22.0
+whitenoise>=6.6
+dj-database-url>=2.1
+psycopg2-binary>=2.9
+# optional (only if you enable the AWS hooks in .env):
+# boto3>=1.34
